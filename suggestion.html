@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Observer Game - Suggestions & Complaints</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4a00e0;
+            --secondary: #8e2de2;
+            --accent: #ffcc00;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(33, 37, 41, 0.95);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Detail Section */
+        .detail-section {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .detail-section h2 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+            color: var(--accent);
+            width: 24px;
+            text-align: center;
+        }
+
+        .contact-item a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .game-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-info h1 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+        }
+
+        .game-info h2 {
+            color: var(--light);
+            margin: 20px 0 10px;
+            font-size: 1.5rem;
+        }
+
+        .game-info p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .download-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--accent);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #ffd633;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Form Section */
+        .form-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--light);
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .netlify-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--light);
+        }
+
+        input, textarea, select {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        textarea {
+            min-height: 150px;
+        }
+
+        .file-upload-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            color: var(--light);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        .file-info.hidden {
+            display: none;
+        }
+
+        .file-name {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .remove-file {
+            background: none;
+            border: none;
+            color: var(--light);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .remove-file:hover {
+            color: #ff6b6b;
+        }
+
+        .submit-btn {
+            align-self: flex-start;
+            padding: 12px 30px;
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #ffd633;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .success-message {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(33, 37, 41, 0.95);
+            padding: 20px 5%;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .copyright {
+            color: var(--gray);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .detail-section {
+                width: 100%;
+                position: static;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .game-info h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .game-info, .form-section, .detail-section {
+                padding: 20px;
+            }
+            
+            .download-links {
+                flex-direction: column;
+            }
+            
+            .download-btn {
+                justify-content: center;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="images.ico" alt="Car Observer Game">
+            Car Observer Game
+        </div>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-download"></i> Download</a>
+            <a href="#suggestions"><i class="fas fa-lightbulb"></i> Suggestions</a>
+            <a href="#contact"><i class="fas fa-info-circle"></i> Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="detail-section">
+            <h2><i class="fas fa-info-circle"></i> Contact Details</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:Mr.Kingankush0.07@gmail.com">Mr.Kingankush0.07@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:Ankushking3.33@gmail.com">Ankushking3.33@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <a href="http://instagram.com/mr.codeman123">mr.codeman123</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-youtube"></i>
+                    <a href="https://www.youtube.com/mr.codeman123">mr.codeman123</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-globe"></i>
+                    <a href="https://www.something.com">Something Website</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section class="game-info">
+                <h1>Car Observer Game</h1>
+                <p>You can edit this Python file and send it to me for improvements or customization.</p>
+                
+                <h2><i class="fas fa-code"></i> Built with Python</h2>
+                <p>This game was developed using Python and the Pygame library for graphics and sound.</p>
+                
+                <h2><i class="fas fa-cogs"></i> Using "auto_py_to_exe" Module</h2>
+                <p>The game was converted to an executable file using the auto_py_to_exe module for easy distribution.</p>
+                
+                <div class="download-links">
+                    <a href="assest.zip" class="download-btn">
+                        <i class="fas fa-file-archive"></i> Download Assets
+                    </a>
+                    <a href="game.py" class="download-btn">
+                        <i class="fab fa-python"></i> Download Python File
+                    </a>
+                </div>
+            </section>
+
+            <section class="form-section" id="suggestions">
+                <h2><i class="fas fa-comments"></i> Feedback & Support</h2>
+                
+                <div class="form-tabs">
+                    <button class="tab-btn active" data-tab="suggestion-tab">Make a Suggestion</button>
+                    <button class="tab-btn" data-tab="complain-tab">Report a Problem</button>
+                </div>
+                
+                <!-- Success Message -->
+                <div class="success-message" id="success-message">
+                    <i class="fas fa-check-circle"></i> <span id="success-text">Thank you for your feedback!</span>
+                </div>
+                
+                <!-- Suggestion Form -->
+                <div class="tab-content active" id="suggestion-tab">
+                    <form name="suggestion" method="POST" data-netlify="true" class="netlify-form" netlify-honeypot="bot-field">
+                        <p class="hidden">
+                            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                        </p>
+                        
+                        <div class="form-group">
+                            <label for="suggestion-name">Your Name (Optional)</label>
+                            <input type="text" id="suggestion-name" name="name" placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="suggestion-email">Your Email (Optional)</label>
+                            <input type="email" id="suggestion-email" name="email" placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="suggestion-type">Suggestion Type</label>
+                            <select id="suggestion-type" name="suggestion-type">
+                                <option value="gameplay">Gameplay Improvement</option>
+                                <option value="graphics">Graphics/Visuals</option>
+                                <option value="performance">Performance</option>
+                                <option value="feature">New Feature</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="suggestion-text">Your Suggestion *</label>
+                            <textarea id="suggestion-text" name="suggestion" placeholder="Write your suggestions here..." required></textarea>
+                        </div>
+                        
+                        <div class="file-upload-container">
+                            <label class="file-upload-label">
+                                <i class="fas fa-file-code"></i> Upload Python File (Optional)
+                            </label>
+                            <input type="file" id="suggestion-file" class="file-input" name="python-file" accept=".py">
+                            <button type="button" class="file-upload-btn" id="suggestion-file-btn">
+                                <i class="fas fa-upload"></i> Choose File
+                            </button>
+                            <div id="suggestion-file-info" class="file-info hidden">
+                                <span class="file-name" id="suggestion-file-name">No file selected</span>
+                                <button type="button" class="remove-file" id="suggestion-remove-file">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Submit Suggestion
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Complain Form -->
+                <div class="tab-content" id="complain-tab">
+                    <form name="complain" method="POST" data-netlify="true" class="netlify-form" netlify-honeypot="bot-field">
+                        <p class="hidden">
+                            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                        </p>
+                        
+                        <div class="form-group">
+                            <label for="complain-name">Your Name (Optional)</label>
+                            <input type="text" id="complain-name" name="name" placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="complain-email">Your Email (Optional)</label>
+                            <input type="email" id="complain-email" name="email" placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="issue-type">Issue Type</label>
+                            <select id="issue-type" name="issue-type">
+                                <option value="bug">Game Bug</option>
+                                <option value="crash">Game Crash</option>
+                                <option value="performance">Performance Issue</option>
+                                <option value="download">Download Problem</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="complain-text">Describe Your Issue *</label>
+                            <textarea id="complain-text" name="complain" placeholder="Please describe the issue you're experiencing..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Submit Complaint
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // File upload functionality for suggestion form
+        const suggestionFileInput = document.getElementById('suggestion-file');
+        const suggestionFileBtn = document.getElementById('suggestion-file-btn');
+        const suggestionFileInfo = document.getElementById('suggestion-file-info');
+        const suggestionFileName = document.getElementById('suggestion-file-name');
+        const suggestionRemoveFile = document.getElementById('suggestion-remove-file');
+        
+        suggestionFileBtn.addEventListener('click', () => {
+            suggestionFileInput.click();
+        });
+        
+        suggestionFileInput.addEventListener('change', () => {
+            if (suggestionFileInput.files.length > 0) {
+                const file = suggestionFileInput.files[0];
+                
+                // Check if the file is a Python file
+                if (!file.name.endsWith('.py')) {
+                    alert('Please select a Python (.py) file.');
+                    suggestionFileInput.value = '';
+                    return;
+                }
+                
+                // Check file size (limit to 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size exceeds 5MB limit. Please select a smaller file.');
+                    suggestionFileInput.value = '';
+                    return;
+                }
+                
+                suggestionFileName.textContent = file.name;
+                suggestionFileInfo.classList.remove('hidden');
+            }
+        });
+        
+        suggestionRemoveFile.addEventListener('click', () => {
+            suggestionFileInput.value = '';
+            suggestionFileInfo.classList.add('hidden');
+        });
+        
+        // Form submission handling
+        document.querySelectorAll('.netlify-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get the form type
+                const isSuggestion = form.getAttribute('name') === 'suggestion';
+                
+                // Show success message
+                const successMessage = document.getElementById('success-message');
+                const successText = document.getElementById('success-text');
+                
+                if (isSuggestion) {
+                    successText.textContent = 'Thank you for your suggestion! We will review it soon.';
+                } else {
+                    successText.textContent = 'Thank you for your feedback. We will address your issue as soon as possible.';
+                }
+                
+                successMessage.style.display = 'block';
+                
+                // Reset form
+                form.reset();
+                if (isSuggestion) {
+                    suggestionFileInfo.classList.add('hidden');
+                }
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            });
+        });
+        
+        // Add animation to contact items on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactItems = document.querySelectorAll('.contact-item');
+            contactItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.classList.add('animate-in');
+            });
+        });
+    </script>
+</body>
+</html>
